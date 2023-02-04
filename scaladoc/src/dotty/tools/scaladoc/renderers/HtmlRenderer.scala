@@ -18,7 +18,7 @@ import dotty.tools.scaladoc.staticFileSymbolUUID
 class HtmlRenderer(rootPackage: Member, members: Map[DRI, Member])(using ctx: DocContext)
   extends Renderer(rootPackage, members, extension = "html"):
 
-  override def pageContent(page: Page, parents: Vector[Link]): AppliedTag =
+  override def pageContent(page: Page, parents: Vector[Link]): Seq[AppliedTag] =
     val PageContent(content, toc) = renderContent(page)
     val contentStr =
       content.toString.stripPrefix("\n").stripPrefix("<div>").stripSuffix("\n").stripSuffix("</div>")
@@ -40,12 +40,14 @@ class HtmlRenderer(rootPackage: Member, members: Map[DRI, Member])(using ctx: Do
           case _ => Nil
       case _ => Nil)
       :+ (Attr("data-pathToRoot") := pathToRoot(page.link.dri))
-
-    html(attrs: _*)(
-      head((mkHead(page) :+ docHead):_*),
-      body(
-        if !page.hasFrame then docBody
-        else mkFrame(page.link, parents, docBody, toc)
+    Seq(
+      doctype("html"),
+      html(attrs: _*)(
+        head((mkHead(page) :+ docHead):_*),
+        body(
+          if !page.hasFrame then docBody
+          else mkFrame(page.link, parents, docBody, toc)
+        )
       )
     )
 

@@ -21,8 +21,8 @@ class MarkdownRenderer(rootPackage: Member, members: Map[DRI, Member])(using ctx
     renderResources()
     super.render()
 
-  override def pageContent(page: Page, parents: Vector[Link]): AppliedTag =
-    renderContent(page).content
+  override def pageContent(page: Page, parents: Vector[Link]): Seq[AppliedTag] =
+    Seq(renderContent(page).content)
 
   private def renderResources(): Seq[String] =
     allResources(Nil).flatMap(renderResource)

@@ -115,3 +115,4 @@ object HTML:
   def text(content: String) = content.escapeReservedTokens
 
   val hr = raw("<hr/>")
+  def doctype(format: String) = raw(s"<!DOCTYPE ${format}>")

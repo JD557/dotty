@@ -162,7 +162,7 @@ abstract class Renderer(rootPackage: Member, val members: Map[DRI, Member], prot
   /**
    * Handler to prepare the content to be rendered. It's a good place to organize frame, footers, front-matter, etc.
    */
-  def pageContent(page: Page, parents: Vector[Link]): AppliedTag
+  def pageContent(page: Page, parents: Vector[Link]): Seq[AppliedTag]
 
   /**
    * Method to be overriden by concrete renderer to render single page
